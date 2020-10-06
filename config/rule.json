@@ -1,0 +1,52 @@
+{
+  "local-part": [
+    "admin",
+    "security",
+    "key",
+    "attacker",
+    "Alice",
+    "Bob",
+    "Mike",
+    "webmaster",
+    "hr"
+  ],
+  "domain": [
+    "aliyun.com",
+    "gmail.com",
+    "sina.com",
+    "top.com",
+    "163.com",
+    "126.com",
+    "ymail.com",
+    "ymail.com.cn",
+    "foxmail.com",
+    "qq.com",
+    "sohu.com",
+    "hotmail.com",
+    "139.com",
+    "china.com",
+    "outlook.com",
+    "icloud.com",
+    "live.com",
+    "msn.com",
+    "sina.cn"
+  ],
+  "obs-domain-list": [
+    "@a.com:@b.com",
+    "@qq.com:@163.com",
+    "@gmail.com:@b.com"
+  ],
+  "CFWS": [
+    "(comment)",
+    "()",
+    "(hi)",
+    "(comm\r\nent)",
+    "(\r\n)"
+  ],
+  "word": [
+    "word"
+  ],
+  "atom": [
+    "atom"
+  ]
+}
