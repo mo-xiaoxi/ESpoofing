@@ -70,7 +70,7 @@ def spoof(mail_from, to_email, subject, content, mime_from=None, mime_from1=None
     if helo:
         smtp.cmd("HELO " + helo)
     else:
-        smtp.cmd("HELO " + '')
+        smtp.cmd("HELO " + 'test1.com')
     smtp.cmd("MAIL FROM: <{}>".format(mail_from))
     smtp.cmd("RCPT TO: <" + to_email + ">")
     smtp.cmd("DATA")
