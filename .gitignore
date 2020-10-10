@@ -6,3 +6,4 @@ __pycache__/*
 *.log
 /log/smtp.log
 /log/mta.log
+config/account.json
