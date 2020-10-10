@@ -52,7 +52,7 @@ def is_bad(s):
 def test_normal(user, passwd, smtp_server, receiveUser, subject, content,
                 filename=None, mime_from1=None, mime_from2=None, mail_from=None, image=None, mime_from=None):
     smtp, port = smtp_server.split(":")
-    print(user, passwd, smtp, port, receiveUser, mime_from, subject, content, filename, mime_from1, mime_from2)
+    logger.info(user, passwd, smtp, port, receiveUser, mime_from, subject, content, filename, mime_from1, mime_from2)
     demo = SendMailDealer(user, passwd, smtp, port, filename=filename)
     demo.sendMail(receiveUser, mime_from=mime_from, subject=subject, content=content, mime_from1=mime_from1,
                   mime_from2=mime_from2, mail_from=mail_from, image=image)
@@ -307,8 +307,8 @@ if __name__ == '__main__':
     Other parameters like mail_from,mime_from,mime_from1,mime_from2 can be specified if smtp server allow.
     :return:
     """
-    # test_normal(user, passwd, smtp_server, receiveUser, subject, content, mime_from=None, filename=filename,
-    #             mime_from1=None, mime_from2=None, mail_from=None, image=image)
+    test_normal(user, passwd, smtp_server, receiveUser, subject, content, mime_from=None, filename=filename,
+                mime_from1=None, mime_from2=None, mail_from=None, image=image)
     # test_mail_mime_attack(user, passwd, smtp_server, receiveUser)
     # test_login_mail_attack(user, passwd, smtp_server, receiveUser)
     # special_unicode = '\xff'
@@ -319,7 +319,7 @@ if __name__ == '__main__':
     # test_multiple_value_mime_from2(user, passwd, smtp_server, receiveUser)
     # test_multiple_value_mime_to(user, passwd, smtp_server, receiveUser)
     # test_mime_to(user, passwd, smtp_server, receiveUser)
-    test_IDN_mime_from_domain(user, passwd, smtp_server, receiveUser)
+    # test_IDN_mime_from_domain(user, passwd, smtp_server, receiveUser)
     # test_IDN_mime_from_username(user, passwd, smtp_server, receiveUser)
     # test_reverse_mime_from_user(user, passwd, smtp_server, receiveUser)
     # test_reverse_mime_from_domain(user, passwd, smtp_server, receiveUser)
