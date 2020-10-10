@@ -76,6 +76,8 @@ class SendMailDealer:
         :return:
         """
         self.msg = MIMEMultipart()
+        if not content:
+            content = ''
         if ehlo is not None:
             self.mailServer.ehlo(ehlo)
         if to is not None:
@@ -134,7 +136,7 @@ class SendMailDealer:
         index = mime_headers.find("--=======")
         mime_headers = mime_headers[:index].strip()
         mime_headers = """MAIL From: {mail_from}\n""".format(mail_from=mail_from) + mime_headers
-        mime_headers = mime_headers.replace("\n","\n\n")
+        mime_headers = mime_headers.replace("\n", "\n\n")
         mime_headers += "\r\n\r\n" + "-" * 100 + "\r\n"
         content += mime_headers
         # logger.debug(mime_headers)
