@@ -28,7 +28,8 @@ def test_reverse_mime_from(to_email):
     # logger.debug('-' * 20)
 
 def test_mime_from_empty(mail_from,to_email):
-    mime_from = ''
+    mail_from = ''
+    mime_from = 'admin@mails.tsinghua.edu.cn'
     subject = "%s --> %s [test_mime_empty]" % (mail_from, to_email)
     content = "Envelope.From: {}\n".format(mail_from)
     content += "MIME.From: {}\n".format(mime_from)
@@ -172,20 +173,20 @@ if __name__ == "__main__":
     :return:
     """
     # test_normal(mail_from, to_email, subject, content, mime_from=mime_from, mime_from1=None,mime_from2=None, sender=None,helo=None,filename=None)
-    test_reverse_mime_from(to_email)
+    # test_reverse_mime_from(to_email)
     test_mime_from_empty(mail_from,to_email)
-    test_IDN_mime_from(to_email)
-
-    test_sender(mail_from,to_email,sender)
-    test_mail_mime_attack(mail_from,to_email)
-    test_mail_mime_attack_diff_domain(mail_from,to_email)
-    test_mime_from_badchar(to_email)
-
-    test_mail_from_empty(mime_from,to_email,helo)
-    test_multiple_value_mime_from1(mail_from,to_email)
-    test_multiple_value_mime_from2(mail_from,to_email)
-    test_multiple_mime_from1(mail_from,to_email)
-    test_multiple_mime_from2(mail_from,to_email)
+    # test_IDN_mime_from(to_email)
+    #
+    # test_sender(mail_from,to_email,sender)
+    # test_mail_mime_attack(mail_from,to_email)
+    # test_mail_mime_attack_diff_domain(mail_from,to_email)
+    # test_mime_from_badchar(to_email)
+    #
+    # test_mail_from_empty(mime_from,to_email,helo)
+    # test_multiple_value_mime_from1(mail_from,to_email)
+    # test_multiple_value_mime_from2(mail_from,to_email)
+    # test_multiple_mime_from1(mail_from,to_email)
+    # test_multiple_mime_from2(mail_from,to_email)
 
 
 
