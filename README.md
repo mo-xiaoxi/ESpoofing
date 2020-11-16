@@ -1,8 +1,5 @@
 # EmailSpoofingTestTools
 
-> This tool is based on our latest research,"Weak Links in Authentication Chains: A Large-scale
-> Analysis of Email Sender Spoofing Attacks", accepted at USENIX Security '21.
-
 EmailSpoofingTestTools is a fuzzing tool for email sender spoofing attacks. This fuzzing tool can generate a number of test samples based on the ABNF grammar for authentication-related headers. Besides, we also provide an evaluation module to help email administrators to evaluate and increase their security. 
 
 Our research systematically analyzes the email delivery process based on the four key stages of authentication: sending authentication, receiving verification, forwarding verification and UI rendering. 
@@ -18,6 +15,26 @@ The following figure shows a spoofing example to impersonate admin@aliyun.com vi
 <div align=center><img src="./img/example.png" width = "400" height = "450" alt="Example" align=center /></div>
 
 
+
+## How to cite us
+
+This tool is based on our latest research,"[Weak Links in Authentication Chains: A Large-scale
+Analysis of Email Sender Spoofing Attacks](https://shenkaiwen.com/files/papers/A_Large_scale_Analysis_of_Email_Spoofing_Attacks_USENIX_2021.pdf)", accepted at [USENIX Security '21](https://www.usenix.org/conference/usenixsecurity21/presentation/shen-kaiwen)) .
+
+If you want to cite us, please use the following (BibTeX) reference:
+
+```bash
+@inproceedings {shen21weaklinks,
+	author = {Kaiwen Shen, Chuhan Wang, Xiaofeng Zheng, Minglei Guo, Chaoyi Lu, Baojun Liu, Yuxuan Zhao, Shuang Hao, Haixin Duan, Qingfeng Pan and Min Yang},
+	title = {Weak Links in Authentication Chains: A Large-scale Analysis of Email Sender Spoofing Attacks},
+	booktitle = {30th {USENIX} Security Symposium ({USENIX} Security 21)},
+	year = {2021},
+	address = {Vancouver, B.C.},
+	url = {https://www.usenix.org/conference/usenixsecurity21/presentation/shen-kaiwen},
+	publisher = {{USENIX} Association},
+	month = aug,
+}
+```
 
 ## Install
 

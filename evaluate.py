@@ -4,7 +4,6 @@ import smtp_send as share
 import mta_send as direct
 from config import *
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = BASE_DIR + '/log/mta.log'
 logger = init_log(LOG_FILE)
 

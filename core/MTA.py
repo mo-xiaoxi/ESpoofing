@@ -58,7 +58,6 @@ def spoof(mail_from, to_email, subject, content, mime_from=None, mime_from1=None
 
     mx_domain = get_mx(to_domain)
     # print("mx_domain:",mx_domain)
-    # print("666")
     if mx_domain is None:
         logger.warn("Can't not resolve mx: " + to_domain)
 

@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-import imaplib
 from util import smtplib
 from config import logger
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
 from email.mime.image import MIMEImage
-
-"""
-SMTP base class
-"""
 
 
 class SendMailDealer:
@@ -48,7 +43,7 @@ class SendMailDealer:
                 self.mailServer.ehlo(ehlo)
             except Exception as e:
                 logger.error(e)
-                logger.error(u"{} This service is not supported with high probability STARTTLS".format(self.smtpServer))
+                logger.error(u"The {} service don't support with STARTTLS method. ".format(self.smtpServer))
         self.mailServer.login(self.mailUser, self.mailPassword)
 
     def addTextPart(self, text, text_type):
@@ -162,7 +157,3 @@ class SendMailDealer:
         # logger.debug('Sent email to %s' % self.msg['To'])
 
 
-class ReceiveMailDealer:
-    def __init__(self, username, password, server):
-        self.mail = imaplib.IMAP4_SSL(server)
-        self.mail.login(username, password)
