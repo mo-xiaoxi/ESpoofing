@@ -134,6 +134,10 @@ We analyze and summarize the employed adversarial techniques that make email sen
 |            | --mail_to   | Set Mail To address manually. It will overwrite the settings in config.yaml |
 |            | --mime_to   | Set Mime To address manually. It will overwrite the settings in config.yaml |
 
+```
+python spoofing.py -m d -t default -a A1
+```
+
 ## Evaluation 
 
 We provide an evaluation  tool to help email administrators to evaluate and strengthen their security. After configuring the target email system information, this tool  try to interact with the target system and evaluate whether it is vulnerable to the attacks we found. For the vulnerable attacks, administrators can configure corresponding filtering rules to defend against attacks.

@@ -21,7 +21,7 @@ direct_mode:
     port: 25 # Optional, default 25
     use_tls: False # Optional, default False
     use_ssl: False # Optional, default False
-    debug_level: False # Optional, default False
+    debug_level: True # Optional, default False
 
 
 attack:
