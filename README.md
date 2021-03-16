@@ -124,11 +124,15 @@ By the way, if you want to use Shared MTA , you need to configure  email sending
 
 We analyze and summarize the employed adversarial techniques that make email sender spoofing successful in practice.  We use [spoofing.py](./spoofing.py)  to verify vulnerabilities in the real world.
 
-**Usage:**
-
-<div align=center><img src="./img/usage.png" width = "800"  alt="screenshots" align=center /></div>
-
-
+| Short Form | Long Form   | Description                                                  |
+| ---------- | ----------- | ------------------------------------------------------------ |
+| -m         | --mode      | The attack mode with spoofing emails (s: Shared MTA, d: Direct MTA) |
+| -t         | --target    | Select target under attack mode.                             |
+| -a         | --attack    | Select a specific attack method to send spoofing email.      |
+|            | --mail_from | Set Mail From address manually. It will overwrite the settings in config.yaml |
+|            | --mime_from | Set Mail From address manually. It will overwrite the settings in config.yaml |
+|            | --mail_to   | Set Mail to address manually. It will overwrite the settings in config.yaml |
+|            | --mime_to   | Set Mail to address manually. It will overwrite the settings in config.yaml |
 
 ## Evaluation 
 

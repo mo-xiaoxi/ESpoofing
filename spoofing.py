@@ -6,7 +6,7 @@ import re
 from optparse import OptionParser
 from core.sender import Sender, Message, prepare_message
 
-
+#TODO add DKIM signer
 def parse_options():
     parser = OptionParser()
     parser.add_option("-m", "--mode", dest="mode", default="s", choices=['s', 'd'],
