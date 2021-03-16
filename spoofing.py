@@ -17,11 +17,11 @@ def parse_options():
     parser.add_option("--mail_from", dest='mail_from', default=None,
                       help='Set Mail From address manually. It will overwrite the settings in config.yaml')
     parser.add_option("--mime_from", dest='mime_from', default=None,
-                      help='Set Mail From address manually. It will overwrite the settings in config.yaml')
+                      help='Set Mime From address manually. It will overwrite the settings in config.yaml')
     parser.add_option("--mail_to", dest='mail_to', default=None,
                       help='Set Mail to address manually. It will overwrite the settings in config.yaml')
     parser.add_option("--mime_to", dest='mime_to', default=None,
-                      help='Set Mail to address manually. It will overwrite the settings in config.yaml')
+                      help='Set Mime to address manually. It will overwrite the settings in config.yaml')
 
     (options, args) = parser.parse_args()
     return options

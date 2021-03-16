@@ -130,9 +130,9 @@ We analyze and summarize the employed adversarial techniques that make email sen
 | -t         | --target    | Select target under attack mode.                             |
 | -a         | --attack    | Select a specific attack method to send spoofing email.      |
 |            | --mail_from | Set Mail From address manually. It will overwrite the settings in config.yaml |
-|            | --mime_from | Set Mail From address manually. It will overwrite the settings in config.yaml |
-|            | --mail_to   | Set Mail to address manually. It will overwrite the settings in config.yaml |
-|            | --mime_to   | Set Mail to address manually. It will overwrite the settings in config.yaml |
+|            | --mime_from | Set Mime From address manually. It will overwrite the settings in config.yaml |
+|            | --mail_to   | Set Mail To address manually. It will overwrite the settings in config.yaml |
+|            | --mime_to   | Set Mime To address manually. It will overwrite the settings in config.yaml |
 
 ## Evaluation 
 
