@@ -57,7 +57,7 @@ sudo pip install -r requirements.txt
 
 #### 1. Generate malformed From headers.
 
-[pre_fuzz.py](./pre_fuzz.py) will automatically  grab the ABNF rules in the relevant email speciﬁcations and generate test samples according to the ABNF rules. Since common mail services usually refuse to handle emails with highly deformed headers, we have speciﬁed set certain values for our empirical experiment purposes. Besides, we also introduced the common mutation methods in the protocol fuzz, such as header repeating, inserting spaces, inserting Unicode characters, header encoding, and case variation
+[pre_fuzz.py](./pre_fuzz.py)  automatically  grab the ABNF rules in the relevant email speciﬁcations and generate test samples according to the ABNF rules. Since common mail services usually refuse to handle emails with highly deformed headers, we have speciﬁed set certain values for our empirical experiment purposes. Besides, we also introduced the common mutation methods in the protocol fuzz, such as header repeating, inserting spaces, inserting Unicode characters, header encoding, and case variation
 **Usage:**
 
 | Short Form | Long Form | Description                                                  |
@@ -100,7 +100,7 @@ For more test samples, please check this [file](https://github.com/EmailTestTool
 
 #### 2. Send spoofing emails with malformed sender address
 
-[run_fuzz_test.py](./run_fuzz_test.py) will use the generated samples to test the security verification logic of the target mail system. We also carefully control the message sending rate with intervals over 10 minutes to minimize the impact's target email services.
+[run_fuzz_test.py](./run_fuzz_test.py)  uses the generated samples to test the security verification logic of the target mail system. We also carefully control the message sending rate with intervals over 10 minutes to minimize the impact's target email services.
 
 **Usage:**
 
@@ -115,7 +115,7 @@ For more test samples, please check this [file](https://github.com/EmailTestTool
 For example, if you want to use Direct MTA to fuzz MIME From header, you can execute:
 
 ```bash
-python3 run_test.py -m d -t gmail -a A2.1
+python3 run_fuzz_test.py -m d -t gmail -a A2.1
 ```
 
 By the way, if you want to use Shared MTA , you need to configure  email sending account in `config/config.yaml`.
@@ -132,7 +132,7 @@ We analyze and summarize the employed adversarial techniques that make email sen
 
 ## Evaluation 
 
-We provide an evaluation  tool to help email administrators to evaluate and strengthen their security. After configuring the target email system information, this tool will try to interact with the target system and evaluate whether it is vulnerable to the attacks we found. For the vulnerable attacks, administrators can configure corresponding filtering rules to defend against attacks.
+We provide an evaluation  tool to help email administrators to evaluate and strengthen their security. After configuring the target email system information, this tool  try to interact with the target system and evaluate whether it is vulnerable to the attacks we found. For the vulnerable attacks, administrators can configure corresponding filtering rules to defend against attacks.
 
 - Configure the recipient address and your email  sending account.
 
@@ -142,7 +142,7 @@ We provide an evaluation  tool to help email administrators to evaluate and stre
   python3 evaluate.py 
   ```
 
-  The program will use both shared MTA and direct MTA methods to try to send forged emails to the recipient.
+  The program uses both shared MTA and direct MTA methods to try to send forged emails to the recipient.
 
 - Check whether these emails are in the inbox of the recipient account.
 
