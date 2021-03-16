@@ -1,8 +1,10 @@
 import numpy as np
-import sys
 import json, re, random
 import time
+import sys
+import traceback
 from config import *
+from core.util import banner
 from optparse import OptionParser
 from fuzzer import mutation as mu
 from fuzzer.abnf_parser import get_rule_list, generate
@@ -25,7 +27,11 @@ def generate_all(rfc_number, rule_name, count):
         rule_value = generate(rule_name, rfc_number)
         res.append(rule_value)
     res = muation(res)
-    save_data(res)
+    data = {}
+    if rule_name == 'from':
+        rule_name = 'mime_from'
+    data[rule_name] = res
+    save_data(data)
     return res
 
 
@@ -66,19 +72,31 @@ def parse_options():
     parser = OptionParser()
     parser.add_option("-r", "--rfc", dest="rfc", default="5322",
                       help="The RFC number of the ABNF rule to be extracted.")
-    parser.add_option("-t", "--target", dest="target", default="from", help="The field to be fuzzed in ABNF rules.")
+    parser.add_option("-f", "--field", dest="field", default="from", help="The field to be fuzzed in ABNF rules.")
     parser.add_option("-c", "--count", dest="count", default="255",
                       help="The amount of ambiguity data that needs to be generated according to ABNF rules.")
     (options, args) = parser.parse_args()
     return options
 
 
+def run_error(errmsg):
+    logger.error(("Usage: python " + sys.argv[0] + " [Options] use -h for help"))
+    logger.error(("Error: " + errmsg))
+    sys.exit()
 
+def main():
+    try:
+        run()
+    except Exception as e:
+        traceback.print_exc()
+        run_error(errmsg=str(e))
 
-
-if __name__ == '__main__':
+def run():
     # print banner
     banner()
     # parse options
     options = parse_options()
-    generate_all(options.rfc, options.target, options.count)
+    generate_all(options.rfc, options.field.lower(), options.count)
+
+if __name__ == '__main__':
+    main()

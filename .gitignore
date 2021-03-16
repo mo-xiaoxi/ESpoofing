@@ -4,6 +4,4 @@ __pycache__/*
 .DS_Store
 *.pyc
 *.log
-/log/smtp.log
-/log/mta.log
-config/account.json
+.bak

@@ -51,38 +51,7 @@ git clone https://github.com/EmailTestTools/EmailTestTools.git
 sudo pip install -r requirements.txt
 ```
 
-## Configure
-
-- Set the recipient address in `config.py`
-
-  ```python
-  # Change receiveUser to what you like to test.
-  receiveUser = "xxx@gmail.com"
-  ```
-
-- Configure your email  account in `config/account.json`.
-
-```json
-{
-  "gmail.com": {
-    "user": "test@test.com",
-    "apipass": "apipass",
-    "passwd": "passwd",
-    "smtp_server": "mail.test.com:25",
-    "imap_server": "imap.test.com:143",
-    "pop3_server": "pop.test.com:110",
-    "ssl_smtp_server": "mail.test.com:465",
-    "ssl_imap_server": "imap.test.com:993",
-    "ssl_pop3_server": "pop.test.com:995"}
-}
-```
-
-You can configure more than one account, and designate sending account in `config.py `.
-
-```python
-# The domain name to be tested
-target_domain = "gmail.com"
-```
+> Set the default configuration in the `config.yaml` file.
 
 ## Fuzzing 
 
@@ -94,18 +63,18 @@ target_domain = "gmail.com"
 | Short Form | Long Form | Description                                                  |
 | ---------- | --------- | ------------------------------------------------------------ |
 | -r         | --rfc     | The RFC number of the ABNF rule to be extracted.             |
-| -t         | --target  | The field to be fuzzed in ABNF rules.                        |
+| -f         | --field   | The field to be fuzzed in ABNF rules.                        |
 | -c         | --count   | The amount of ambiguity data that needs to be generated according to ABNF rules. |
 
 **Example:**
 
 ```bash
-python3 pre_fuzz.py -r 5322 -t from -c 255
+python3 pre_fuzz.py -r 5322 -f from -c 255
 ```
 
 **Screenshots:**
 
-<div align=center><img src="./img/screenshots.png" width = "800" height = "500" alt="screenshots" align=center /></div>
+<div align=center><img src="./img/screenshots2.png" width = "800"  alt="screenshots" align=center /></div>
 
 **Generated Test Sample:**
 
@@ -131,30 +100,35 @@ For more test samples, please check this [file](https://github.com/EmailTestTool
 
 #### 2. Send spoofing emails with malformed sender address
 
-[run_test.py](./run_test.py) will use the generated samples to test the security verification logic of the target mail system. We also carefully control the message sending rate with intervals over 10 minutes to minimize the impact's target email services.
+[run_fuzz_test.py](./run_fuzz_test.py) will use the generated samples to test the security verification logic of the target mail system. We also carefully control the message sending rate with intervals over 10 minutes to minimize the impact's target email services.
 
-You can choose **Shared MTA** or **Direct MTA** to send spoofing emails. At the same time, you can also choose **MIME From** or **MAIL From**  header to test.
+**Usage:**
 
-| Short Form | Long Form | Description                                       |
-| ---------- | --------- | ------------------------------------------------- |
-| -m         | --mode    | Attack mode ( SMTP: Shared MTA, MTA: Direct MTA). |
-| -t         | --target  | The target field to test. (MIME / MAIL )          |
+| Short Form | Long Form | Description                                                  |
+| ---------- | --------- | ------------------------------------------------------------ |
+| -m         | --mode    | The attack mode with spoofing emails (s: Shared MTA, d: Direct MTA) |
+| -t         | --target  | Select target under attack mode.                             |
+| -a         | --attack  | Select a specific attack method to send spoofing email.      |
+
+**Example:**
 
 For example, if you want to use Direct MTA to fuzz MIME From header, you can execute:
 
 ```bash
-python3 run_test.py -m MTA -t MIME
+python3 run_test.py -m d -t gmail -a A2.1
 ```
 
-By the way, if you want to use Shared MTA , you need to configure  email sending account in `config/account.json` and `config.py`.
+By the way, if you want to use Shared MTA , you need to configure  email sending account in `config/config.yaml`.
 
 #### 3. Analyze and summarize the employed adversarial techniques
 
-We analyze and summarize the employed adversarial techniques that make email sender spoofing successful in practice.  We use two scripts to verify vulnerabilities in the real world.
+We analyze and summarize the employed adversarial techniques that make email sender spoofing successful in practice.  We use [spoofing.py](./spoofing.py)  to verify vulnerabilities in the real world.
 
-[smtp_send.py](./smtp_send.py) simulates as user's MUA to Sender's MTA via SMTP protocol (**Shared MTA**). It is to test the security issues of the Sender's MTA and test whether the receiver can accept the abnormal emails.
+**Usage:**
 
-[mta_send.py](./mta_send.py) simulate as Sender's MTA to communicate with Receiver's MTA (**Direct MTA**). This tool can be simulated as any email sender and can test receiver's security.
+<div align=center><img src="./img/usage.png" width = "800"  alt="screenshots" align=center /></div>
+
+
 
 ## Evaluation 
 
@@ -174,20 +148,6 @@ We provide an evaluation  tool to help email administrators to evaluate and stre
 
 The body of these forged emails contains detailed information about each header in email and corresponding defense measures, such as rejecting the letter, providing security warnings on the front end, etc. If a forged email enters the inbox of the target mail system, the administrator can easily understand the attack principle and take effective measures to defend it.
 
-It should be noted that when using Direct MTA to test, some email headers need to be manually specified in some email spoofing attacks. So you may need to configure these headers' default values in `config.py`. 
-
-```python
-# Some default values in Direct MTA Attack when the attack does not specify these parameter values
-mail_from = 'xxx@test.com'
-mime_from = 'xxx@test.com'
-reply_to = mime_from
-sender = "xxx@test.com"
-to_email = 'xxx@gmail.com'
-subject = 'This is subject'
-content = """This is content"""
-helo = 'test.com'
-```
-
 The following is an example of using this tool to evaluate the security of the target email system.
 
 You can see that some spoofing emails have entered the inbox of the target email system. This means that the target system may be  vulnerable to the corresponding attacks
@@ -202,4 +162,4 @@ You can get more information by reading the content of the email, including deta
 
 ## Version
 
-Current version is 1.2
+Current version is 2.0

@@ -1,0 +1,175 @@
+share_mode:
+  default:
+    username: xxxx@mails.tsinghua.edu.cn # username via SMTP login
+    password: xxxxxx # password via SMTP login
+    host: mails.tsinghua.edu.cn # SMTP server
+    port: 25 # Optional, default 25
+    use_tls: False # Optional, default False
+    use_ssl: False # Optional, default False
+    debug_level: False # Optional, default False
+
+  gmail.com:
+    username: xxx@gmail.com
+    password: xxxx
+    host: smtp.gmail.com
+    port: 25
+
+
+direct_mode:
+  default:
+    host: 163.com # Target email service domain, e.g. admin@163.com ==> 163.com
+    port: 25 # Optional, default 25
+    use_tls: False # Optional, default False
+    use_ssl: False # Optional, default False
+    debug_level: False # Optional, default False
+
+
+attack:
+  default:
+    subject: "Normal Email Test!"
+    body: "If you can see this email, it means that the email can be delivered normally. :)"
+    html:
+    attachments:
+    date:
+    mail_from:
+    mime_from:
+    to:
+    cc:
+    bcc:
+    reply_to:
+    mail_to:
+    extra_headers:
+    helo:
+    autoencode: False
+
+ # A1 attack
+  A1:
+    mail_from: "test@mail.spoofing.com"
+    subject: "[Warning] Maybe you are vulnerable to the A1 attack!"
+    body: "A1: The Inconsistency between Auth username and Mail From headers."
+    description: "A1: The Inconsistency between Auth username and Mail From headers."
+    defense: "Prohibit sending such emails!"
+
+  # A2 attack
+  A2.1:
+    mime_from: "Oscar@mail.spoofing.com"
+    subject: "[Warning] Maybe you are vulnerable to the A2 attack!"
+    body: "A2.1: The Inconsistency between Mail From and From headers, with different username."
+    description: "A2.1: The Inconsistency between Mail From and From headers, with different username."
+    defense: "You should Add a reminder to remind users that the sender is inconsistent with MAIL FROM on UI."
+
+
+  # A2 attack
+  A2.2:
+    mime_from: "Alice@attack.com"
+    subject: "[Warning] Maybe you are vulnerable to the A2 attack!"
+    body: "A2.2: The Inconsistency between Mail From and From headers, with different domain."
+    description: "A2.2: The Inconsistency between Mail From and From headers, with different username."
+    defense: "You should Add a reminder to remind users that the sender is inconsistent with MAIL FROM on UI."
+
+
+  # A3 attack
+  A3:
+    helo: "mail.spoofing.com"
+    mail_from: ""
+    subject: "[Warning] Maybe you are vulnerable to the A3 attack!"
+    body: "A3: Empty Mail From Attack."
+    description: "A3: Empty Mail From Attack."
+    defense: "You should Add a reminder to remind users that the sender is inconsistent with MAIL FROM on UI."
+
+
+  # A4 attack
+  A4:
+    mime_from: "admin@mail.spoofing.com"
+    extra_headers: {"From": "nislemail@spoofing.com"}
+    subject: "[Warning] Maybe you are vulnerable to the A4 attack!"
+    body: "A4: Multiple From Headers."
+    description: "A4: Multiple From Headers."
+    defense: "You should reject such emails which contain multiple from headers."
+
+  # A5 attack
+  A5:
+    mime_from: "<alice@mail.spoofing.com>, <Oscar@attack.com>"
+    extra_headers: {"Sender": "nislemail@163.com"}
+    subject: "[Warning] Maybe you are vulnerable to the A5 attack!"
+    body: "A5: Multiple From Headers."
+    description: "A5: Multiple From Headers."
+    defense: "You should display all sender addresses and remind users that it may be forged emails on UI."
+
+  # A6 attack
+  A6:
+    mime_from: "<Alice@mail.spoofing.com\xffattack.com>"
+    subject: "[Warning] Maybe you are vulnerable to the A6 attack!"
+    body: "A6: Parsing Inconsistencies Attacks."
+    autoencode: False
+    description: "A6: Parsing Inconsistencies Attacks."
+    defense: "You should reject such emails which contain special chars in From header."
+
+  # A7 attack
+  A7:
+    mime_from: "<{{ b64(Alice@a.com) }}{{ b64(\xff) }}@attack.com>"
+    subject: "[Warning] Maybe you are vulnerable to the A7 attack!"
+    body: "A7: Encoding Based Attack."
+    description: "A7: Encoding Based Attack."
+    defense: "You should Add a reminder to remind users."
+
+  # A8 attack
+  A8:
+    mail_from: "<admin@mail.spoofing.com>"
+    mime_from: "<admin@spoofing.com>"
+    subject: "[Warning] Maybe you are vulnerable to the A8 attack!"
+    body: "A8: The Subdomain Attack."
+    description: "A8: The Subdomain Attack."
+    defense: "You should Add a reminder to remind users"
+
+
+
+  # A9-A11 need manual config the email forwarding service. We test those attacks manually.
+
+
+  # A12 attack
+  A12.1:
+    mime_from: "<admin@xn--80aa1cn6g67a.com>"
+    subject: "[Warning] Maybe you are vulnerable to the A12 attack!"
+    body: "A12.1: IDN Homograph Attack with IDN domain."
+    description: "A12.1: IDN Homograph Attack with IDN domain."
+    defense: "You can only display the original address with Punycode character, if a domain label contains characters from multiple different languages."
+
+
+  # A12 attack
+  A12.2:
+    mime_from: "<xn--80aa1cn6g67a@mail.spoofing.com>"
+    subject: "[Warning] Maybe you are vulnerable to the A12 attack!"
+    body: "A12.2: IDN Homograph Attack with IDN username."
+    description: "A12.2: IDN Homograph Attack with IDN username."
+    defense: "You can only display the original address with Punycode character, if a domain label contains characters from multiple different languages."
+
+
+  # A13 attack
+  A13:
+    mime_from: "<Alice@gm@ail.com>"
+    subject: "[Warning] Maybe you are vulnerable to the A6 attack!"
+    body: "A13: Missing UI Rendering Attack."
+    description: "A13: Missing UI Rendering Attack"
+    defense: "You should reject emails which contains special and not allowed characters in the sender address or add a warning in the UI."
+
+  # A14 attack
+  A14.1:
+    mime_from: "\u202emoc.qq@\u202d@test.com"
+    subject: "[Warning] Maybe you are vulnerable to the A6 attack!"
+    body: "A14: Right-to-left Override Attack in username."
+    description: "A14: Right-to-left Override Attack in username."
+    defense: "You should reject emails which contain these special characters in the sender address or add a warning on UI."
+
+
+  A14.2:
+    mime_from: "test@\u202etest.com\u202d"
+    subject: "[Warning] Maybe you are vulnerable to the A6 attack!"
+    body: "A14: Right-to-left Override Attack in domain."
+    description: "A14: Right-to-left Override Attack in domain."
+    defense: "You should reject emails which contain these special characters in the sender address or add a warning on UI."
+
+global_parameters:
+  subject: "Template subject"
+  mail_to: "nislemail@163.com" # Change receiveUser to what you like to test.
+
