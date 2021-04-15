@@ -1,6 +1,6 @@
-# EmailSpoofingTestTools
+# ESpoofing
 
-EmailSpoofingTestTools is a fuzzing tool for email sender spoofing attacks. This fuzzing tool can generate a number of test samples based on the ABNF grammar for authentication-related headers. Besides, we also provide an evaluation module to help email administrators to evaluate and increase their security. 
+ESpoofing is a fuzzing tool for email sender spoofing attack. This fuzzing tool can generate a number of test samples based on the ABNF grammar for authentication-related headers. Besides, we also provide an evaluation module to help email administrators to evaluate and increase their security. 
 
 Our research systematically analyzes the email delivery process based on the four key stages of authentication: sending authentication, receiving verification, forwarding verification and UI rendering. 
 
