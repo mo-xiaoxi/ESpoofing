@@ -1,7 +1,22 @@
-share_mode:
+default: # Set some Global default values
+  subject: "Template subject"
+  body: "test"
+
+
+target: #target victim
   default:
-    username: xxxx@mails.tsinghua.edu.cn # username via SMTP login
-    password: xxxxxx # password via SMTP login
+    username: 'nislemail@163.com'
+    host: 163.com # Optional, Target email service domain, e.g. admin@163.com ==> 163.com
+    port: 25 # Optional, default 25
+    use_tls: False # Optional, default False
+    use_ssl: False # Optional, default False
+    debug_level: False # Optional, default False
+
+
+smtp_user:
+  default:
+    username: xxx@mails.tsinghua.edu.cn # username via SMTP login
+    password: helloworld # password via SMTP login
     host: mails.tsinghua.edu.cn # SMTP server
     port: 25 # Optional, default 25
     use_tls: False # Optional, default False
@@ -13,15 +28,6 @@ share_mode:
     password: xxxx
     host: smtp.gmail.com
     port: 25
-
-
-direct_mode:
-  default:
-    host: 163.com # Target email service domain, e.g. admin@163.com ==> 163.com
-    port: 25 # Optional, default 25
-    use_tls: False # Optional, default False
-    use_ssl: False # Optional, default False
-    debug_level: True # Optional, default False
 
 
 attack:
@@ -42,7 +48,7 @@ attack:
     helo:
     autoencode: False
 
- # A1 attack
+  # A1 attack
   A1:
     mail_from: "test@mail.spoofing.com"
     subject: "[Warning] Maybe you are vulnerable to the A1 attack!"
@@ -81,7 +87,7 @@ attack:
   # A4 attack
   A4:
     mime_from: "admin@mail.spoofing.com"
-    extra_headers: {"From": "nislemail@spoofing.com"}
+    extra_headers: { "From": "nislemail@spoofing.com" }
     subject: "[Warning] Maybe you are vulnerable to the A4 attack!"
     body: "A4: Multiple From Headers."
     description: "A4: Multiple From Headers."
@@ -90,7 +96,7 @@ attack:
   # A5 attack
   A5:
     mime_from: "<alice@mail.spoofing.com>, <Oscar@attack.com>"
-    extra_headers: {"Sender": "nislemail@163.com"}
+    extra_headers: { "Sender": "nislemail@163.com" }
     subject: "[Warning] Maybe you are vulnerable to the A5 attack!"
     body: "A5: Multiple From Headers."
     description: "A5: Multiple From Headers."
@@ -168,8 +174,4 @@ attack:
     body: "A14: Right-to-left Override Attack in domain."
     description: "A14: Right-to-left Override Attack in domain."
     defense: "You should reject emails which contain these special characters in the sender address or add a warning on UI."
-
-global_parameters:
-  subject: "Template subject"
-  mail_to: "nislemail@163.com" # Change receiveUser to what you like to test.
 
