@@ -57,10 +57,10 @@ def read_config(config_path):
             tmp = func_dict.get(function, functin_call_error)(value)
             data = data.replace(k, tmp)
         else:
-            data = data.replace(k, y['global_parameters'][t])
+            data = data.replace(k, y['default'][t])
     config = yaml.safe_load(data)
     attack = config['attack']
-    tp = config['global_parameters']
+    tp = config['default']
 
     # Complement the default value in attack
     for i in iterkeys(attack):
@@ -92,7 +92,7 @@ def init_log(filename):
     )
     # formattler = '%(asctime)s %(pathname)-8s:%(lineno)d %(levelname)-8s %(message)s'
     # formattler = '%(levelname)-8s %(message)s'
-    formattler = '[%(levelname)-8s] [%(asctime)s] [%(filename)-8s:%(lineno)-3d] %(message)s'
+    formattler = '[%(levelname)-7s] [%(asctime)s] [%(filename)-8s:%(lineno)-3d] %(message)s'
     fmt = logging.Formatter(formattler)
     logger = logging.getLogger()
     coloredlogs.install(

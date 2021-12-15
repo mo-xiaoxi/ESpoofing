@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os,json
+import os, json
 from core.util import init_log
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -10,7 +10,5 @@ CONFIG_PATH = BASE_DIR + '/config/config.yaml'
 
 with open(RULE_PATH, 'r') as f:
     CONFIG_RULES = json.load(f)
-
-DEFAULT_EMAIL = 'default@mail.spoofing.com'
 
 logger = init_log(LOG_FILE)

@@ -1,8 +1,8 @@
 import smtplib
 import smtplib
 import time
-from config import *
-from core.util import *
+from config import logger
+from core.util import string_types, text_type, query_mx_record
 from email import charset
 from email.encoders import encode_base64
 from email.mime.base import MIMEBase
@@ -19,12 +19,12 @@ def prepare_message(message, sender):
         if sender.mode == 'share':
             message.mime_from = sender.username
         else:
-            message.mime_from = DEFAULT_EMAIL
+            message.mime_from = 'default@mail.spoofing.com'
     if message.mail_from is None:
         if sender.mode == 'share':
             message.mail_from = sender.username
         else:
-            message.mail_from = DEFAULT_EMAIL
+            message.mail_from = 'default@mail.spoofing.com'
     if message.mail_to is None:
         message.mail_to = message.to_addrs()
         assert message.mail_to is not None
@@ -82,18 +82,17 @@ class Sender(object):
 
     def show_status(self):
         status = """
-------------------------------------------------------------------
-Sender config:
-Mode: {}
-Host: {}
-Port: {}
-Username: {}
-Password: {}
-Use_tls: {}
-Use_ssl: {}
-Debug_level: {}
-------------------------------------------------------------------
-        """.format(self.mode,self.host,self.port,self.username, self.password,self.use_tls, self.use_ssl,self.debug_level)
+Sender Config:
+    - mode: {}
+    - host: {}
+    - port: {}
+    - username: {}
+    - password: {}
+    - use_tls: {}
+    - use_ssl: {}
+    - debug_level: {}
+        """.format(self.mode, self.host, self.port, self.username, self.password, self.use_tls, self.use_ssl,
+                   self.debug_level)
         logger.info(status)
         return status
 
@@ -218,8 +217,8 @@ class Message(object):
     def __init__(self, subject=None, to=None, body=None, html=None,
                  mime_from=None, cc=None, bcc=None, attachments=None,
                  reply_to=None, date=None, charset='utf-8',
-                 extra_headers=None, mail_options=None, rcpt_options=None, mail_to=None, mail_from=None, helo=None,
-                 autoencode=None, defense=None, description=None):
+                 extra_headers={}, mail_options=None, rcpt_options=None, mail_to=None, mail_from=None, helo=None,
+                 autoencode=None, defense=None, description=None, sender=None):
         self.subject = subject
         self.body = body
         self.html = html
@@ -241,6 +240,7 @@ class Message(object):
         self.mail_from = mail_from
         self.mail_to = mail_to or []
         self.helo = helo
+        self.sender = sender
         # make message_id
         self.message_id = make_msgid(domain=self.msg_domain())
 
@@ -279,16 +279,13 @@ class Message(object):
 
     def show_status(self):
         status = """
-------------------------------------------------------------------
-Envelope:
-Helo: {}
-Mail From: {}
-Mail To: {}
-
-Email Content:
+Message Config:
+- helo: {}
+- mail from: {}
+- mail to: {}  
+- email content:
 {}
-------------------------------------------------------------------
-        """.format(self.helo,self.mail_from,self.mail_to, self.as_string())
+        """.format(self.helo, self.mail_from, self.mail_to, self.as_string())
         logger.info(status)
         return status
 
@@ -314,18 +311,20 @@ Email Content:
             msg.attach(alternative)
 
         msg['Subject'] = Header(self.subject, self.charset)
-        msg['From'] = self.mime_from
         if self.extra_headers:
             for key, value in self.extra_headers.items():
                 # msg[key] = value
                 msg.add_header(key, value)
-        msg['To'] = ', '.join(self.to)
         msg['Date'] = formatdate(self.date, localtime=True)
         msg['Message-ID'] = self.message_id
+        msg['From'] = self.mime_from
+        msg['To'] = ', '.join(self.to)
         if self.cc:
             msg['Cc'] = ', '.join(self.cc)
         if self.reply_to:
             msg['Reply-To'] = self.reply_to
+        if self.sender:
+            msg['Sender'] = self.sender
         for attachment in self.attachments:
             f = MIMEBase(*attachment.content_type.split('/'))
             f.set_payload(attachment.data)
@@ -344,13 +343,18 @@ Email Content:
                 f.add_header(key, value)
             msg.attach(f)
 
-        # TODO: fix mime_from auto encoding
+
         s = msg.as_string()
-        if not self.autoencode:
+        if not self.autoencode or 'raw' in self.extra_headers:
             headers = s.split('\n')
             for h in headers:
+                # fix mime_from auto encoding
                 if h.startswith('From:'):
                     s = s.replace(h, "From: {}".format(self.mime_from))
+                # add raw data
+                elif h.startswith("raw:"):
+                    # print(h)
+                    s = s.replace(h, '{}'.format(self.extra_headers['raw']))
 
         # # fix run fuzz_test
         # for k, v in iteritems(self.run_fuzz):
